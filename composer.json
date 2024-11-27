@@ -1,0 +1,47 @@
+{
+    "name": "integrica/filassist",
+    "description": "Filassist is a Laravel package designed to simplify and streamline the installation and configuration of commonly used packages in Filament-based projects.",
+    "type": "library",
+    "keywords": [
+        "laravel",
+        "filament",
+        "install",
+        "config",
+        "integrica"
+    ],
+    "homepage": "https://github.com/Integrica/filassist",
+    "support": {
+        "issues": "https://github.com/Integrica/filassist/issues",
+        "source": "https://github.com/Integrica/filassist"
+    },
+    "license": "MIT",
+    "authors": [
+        {
+            "name": "Integrica",
+            "email": "integrica8@gmail.com"
+        }
+    ],
+    "require": {
+        "php": "^8.2",
+        "filament/filament": "^3.2",
+        "spatie/laravel-package-tools": "^1.16",
+        "integrica/scriptorium": "^0.0.2"
+    },
+    "autoload": {
+        "psr-4": {
+            "Integrica\\Filassist\\": "src/"
+        }
+    },
+    "extra": {
+        "laravel": {
+            "providers": [
+                "Integrica\\Filassist\\FilassistServiceProvider"
+            ]
+        }
+    },
+    "config": {
+        "sort-packages": true
+    },
+    "minimum-stability": "dev",
+    "prefer-stable": true
+}
