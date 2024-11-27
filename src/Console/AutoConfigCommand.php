@@ -5,7 +5,7 @@ namespace Integrica\Filassist\Console;
 use Illuminate\Console\Command;
 use Illuminate\Support\Composer;
 
-class FilamentFullConfigCommand extends Command
+class AutoConfigCommand extends Command
 {
     /**
      * The name and signature of the console command.
