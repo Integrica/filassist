@@ -4,9 +4,17 @@ namespace Integrica\Filassist\Console;
 
 use Illuminate\Console\Command;
 use Illuminate\Support\Composer;
+use Illuminate\Support\Facades\File;
+use Integrica\Filassist\Console\Concerns\PreventLazyLoading;
+use Integrica\Filassist\Console\Concerns\SetSqlQueryLogging;
+use Integrica\Filassist\Console\Concerns\UpdateEnvFile;
 
 class AutoConfigCommand extends Command
 {
+    use UpdateEnvFile;
+    use SetSqlQueryLogging;
+    use PreventLazyLoading;
+
     /**
      * The name and signature of the console command.
      *
@@ -48,6 +56,15 @@ class AutoConfigCommand extends Command
     public function handle()
     {
         $this->options = $this->options();
+
+        $template = json_decode(File::get($this->option('template')), false);
+        // dump($template);
+
+        $this->updateEnvFile($template);
+
+        $this->setSqlQueryLogging($template);
+
+        $this->preventLazyLoading($template);
 
         return Command::SUCCESS;
     }

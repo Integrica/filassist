@@ -1,0 +1,64 @@
+{
+    "name": "Sample Project Name",
+    "locale": "en",
+    "fallback_locale": "en",
+    "timezone": "UTC",
+    "log_channel": "daily",
+    "sql_query_logging": false,
+    "db": {
+        "connection": "mysql",
+        "host": "127.0.0.1",
+        "port": 3306,
+        "database": "laravel",
+        "username": "root",
+        "password": ""
+    },
+    "prevent_lazy_loading": false,
+    "prevent_silently_discarding_attributes": false,
+    "prevent_accessing_missing_attributes": false,
+    "session_driver": "file",
+    "cache_store": "file",
+
+    "filament-user" : {
+        "name" : "John Doe",
+        "email" : "john@doe.com",
+        "password" : null
+    },
+
+    "require": [
+        {
+            "package": "barryvdh/laravel-debugbar",
+            "dev": true,
+            "disable-views": true
+        },
+        {
+            "package": "laravel-lang/common",
+            "dev": true,
+            "translations": [ 
+                "en",
+                "de"
+            ]
+        },
+        {
+            "package": "hugomyb/filament-error-mailer",
+            "email" : [
+                "john@doe.com",
+                "jane@doe.com"
+            ]
+        },
+        {
+            "package": "saade/filament-laravel-log",
+            "translations": [ 
+                "en",
+                "de"
+            ]
+        },
+        {
+            "package": "bezhansalleh/filament-shield",
+            "translations": [ 
+                "en",
+                "de"
+            ]
+        }
+    ]
+}
