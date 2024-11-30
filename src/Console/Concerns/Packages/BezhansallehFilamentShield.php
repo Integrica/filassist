@@ -128,7 +128,5 @@ trait BezhansallehFilamentShield
         );", false)
             )
             ->save();
-        
-        $this->call('shield:generate', [ '--all' => true, '--ignore-existing-policies' => true, '--panel' => $panel->getId() ]);
     }
 }

@@ -11,6 +11,7 @@ use Integrica\Filassist\Console\Concerns\Packages\BezhansallehFilamentShield;
 use Integrica\Filassist\Console\Concerns\Packages\FilamentSpatieLaravelSettingsPlugin;
 use Integrica\Filassist\Console\Concerns\Packages\HugomybFilamentErrorMailer;
 use Integrica\Filassist\Console\Concerns\Packages\LaravelLangCommon;
+use Integrica\Filassist\Console\Concerns\Packages\NoxouaFilamentActivityLog;
 use Integrica\Filassist\Console\Concerns\Packages\SaadeFilamentLaravelLog;
 
 trait InstallAndConfigurePackages
@@ -22,6 +23,7 @@ trait InstallAndConfigurePackages
     use SaadeFilamentLaravelLog;
     use BezhansallehFilamentShield;
     use FilamentSpatieLaravelSettingsPlugin;
+    use NoxouaFilamentActivityLog;
 
     public function installAndConfigurePackages(object $template): void
     {
@@ -38,9 +40,14 @@ trait InstallAndConfigurePackages
 
         $this->configureFilament($template, $panel, $panelPath);
         
+        $template->has_shield = false;
         $this->installPackages($template);
 
         $this->configurePackages($template, $panel, $panelPath);
+
+        if ($template->has_shield) {
+            $this->call('shield:generate', [ '--all' => true, '--ignore-existing-policies' => true, '--panel' => $panel->getId() ]);
+        }
     }
 
     private function installPackages($template) 
@@ -60,6 +67,10 @@ trait InstallAndConfigurePackages
                 $installablePackages[] = $package->package;
             } else if ($isDev && !in_array($package->package, $installedDevPackages)) {
                 $installableDevPackages[] = $package->package;
+            }
+
+            if ($package->package == 'bezhansalleh/filament-shield') {
+                $template->has_shield = true;
             }
         }
 

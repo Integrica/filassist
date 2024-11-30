@@ -1,0 +1,82 @@
+<?php
+
+namespace App\Filament\Pages\Activity;
+
+use BezhanSalleh\FilamentShield\Traits\HasPageShield;
+use Malzariey\FilamentDaterangepickerFilter\Fields\DateRangePicker;
+use Noxo\FilamentActivityLog\Pages\ListActivities;
+use Spatie\Activitylog\Models\Activity;
+
+class Activities extends ListActivities
+{
+    use HasPageShield;
+    
+    protected static ?string $navigationIcon = 'heroicon-o-document-text';
+
+    protected static ?int $navigationSort = 100;
+
+    public function getActivities()
+    {
+        $activityModel = config('activitylog.activity_model') ?? Activity::class;
+
+        return $this->paginateTableQuery(
+            $this->applyFilters($activityModel::with(['causer', 'subject'])->latest())
+        );
+    }
+
+    protected function getDateRangeField()
+    {
+        return DateRangePicker::make('date_range')
+            ->useRangeLabels()
+            ->alwaysShowCalendar(false)
+            ->label(__('filament-activity-log::activities.filters.date'))
+            ->placeholder(__('filament-activity-log::activities.filters.date'))
+            ->displayFormat('YYYY-MM-DD')
+            ->format('Y-m-d')
+            // ->setAutoApplyOption(false)
+            ;
+    }
+
+    protected function getDateRange(?string $date_range): ?array
+    {
+        if (filled($date_range)) {
+            try {
+                [$from, $to] = explode(' - ', $date_range);
+                $from = \Carbon\Carbon::createFromFormat('Y-m-d', $from)->startOfDay();
+                $to = \Carbon\Carbon::createFromFormat('Y-m-d', $to)->endOfDay();
+
+                return compact('from', 'to');
+            } catch (\Exception $e) {
+            }
+        }
+
+        return null;
+    }
+
+    protected function getCauserField()
+    {
+        return \Filament\Forms\Components\Select::make('causer')
+            ->label(__('filament-activity-log::activities.filters.causer'))
+            ->native(false)
+            ->allowHtml()
+            ->options(function () {
+                $causers = Activity::query()->with('causer')
+                    ->groupBy('causer_id', 'causer_type')
+                    ->get(['causer_id', 'causer_type'])
+                    ->filter(fn ($activity) => $activity->causer instanceof \Illuminate\Database\Eloquent\Model)
+                    ->map(fn ($activity) => [
+                        'value' => "{$activity->causer_type}:{$activity->causer_id}",
+                        'label' => \Illuminate\Support\Facades\Blade::render(
+                            '<x-filament::avatar
+                                src="' . filament()->getUserAvatarUrl($activity->causer) . '"
+                                size="sm"
+                                class="inline mr-2"
+                            /> ' . $activity->causer?->name
+                        ),
+                    ])
+                    ->pluck('label', 'value');
+
+                return $causers;
+            });
+    }
+}

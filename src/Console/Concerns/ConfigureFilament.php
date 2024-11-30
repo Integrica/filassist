@@ -5,6 +5,7 @@ namespace Integrica\Filassist\Console\Concerns;
 use App\Models\User;
 use Filament\Facades\Filament;
 use Filament\Panel;
+use Illuminate\Support\Facades\Schema;
 use Illuminate\Support\Str;
 use Integrica\Scriptorium\Stringer;
 
@@ -16,12 +17,12 @@ trait ConfigureFilament
 
         $this->updateUserModel($template);
         
-        if ($template->notifications ?? true) {
+        if (($template->notifications ?? true) && !Schema::hasTable('notifications')) {
             $this->call('notifications:table');
         }
 
         // import / export actions
-        if ($template->actions ?? true) {
+        if (($template->actions ?? true) && !Schema::hasTable('exports')) {
             $this->call('vendor:publish', [ '--tag' => 'filament-actions-migrations' ]);
         }
 
