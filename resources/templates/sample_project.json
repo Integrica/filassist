@@ -29,6 +29,11 @@
         "notifications" : false,
         "actions" : false
     },
+    
+    "locales": [ 
+        "en",
+        "de"
+    ],
 
     "packages": [
         {
@@ -52,18 +57,15 @@
         },
         {
             "package": "saade/filament-laravel-log",
-            "navigation_group": true,
-            "locales": [ 
-                "en",
-                "de"
-            ]
+            "navigation_group": true
         },
         {
-            "package": "bezhansalleh/filament-shield",
-            "locales": [ 
-                "en",
-                "de"
-            ]
+            "package": "bezhansalleh/filament-shield"
+        },
+        {
+            "package": "filament/spatie-laravel-settings-plugin",
+            "cluster": false,
+            "cache": false
         }
     ]
 }

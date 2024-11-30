@@ -4,19 +4,28 @@ namespace Integrica\Filassist\Console\Concerns\Packages;
 
 use Filament\Panel;
 use Illuminate\Support\Facades\File;
+use Illuminate\Support\Facades\Schema;
 use Integrica\Scriptorium\Stringer;
 
 trait BezhansallehFilamentShield
 {
     public function configureBezhansallehFilamentShield($template, $package, Panel $panel, string $panelPath): void
     {
+        $count = collect(['role_has_permissions', 'model_has_roles', 'model_has_permissions', 'roles', 'permissions'])
+            ->filter(fn (string $table) => Schema::hasTable($table))
+            ->count();
+        if ($count !== 0) {
+            // $this->warn('Filament Shield is already installed. Skipping...');
+            return;
+        }
+
         $this->call('vendor:publish', [ '--tag' => 'filament-shield-config' ]);
         $this->call('vendor:publish', [ '--tag' => 'filament-shield-translations' ]);
 
         $subfolders = File::directories(base_path('lang/vendor/filament-shield'));
         foreach ($subfolders as $subfolder) {
             $folderName = basename($subfolder);
-            if (!in_array($folderName, $package->locales)) {
+            if (!in_array($folderName, $package->locales ?? $template->locales)) {
                 File::deleteDirectory($subfolder);
             }
         }
@@ -46,10 +55,10 @@ trait BezhansallehFilamentShield
             ->replace("'discover_all_pages' => false,", "'discover_all_pages' => true,")
             ->save();
 
-            $this->call('shield:setup');
-            $this->call('shield:install', [ 'panel' => $panel->getId() ]);
-            // $this->call('shield:setup', [ '--tenant', 'App\\Models\\Team' ]);
-            // $this->call('shield:install', [ 'panel' => $panel->getId(), '--tenant', 'App\\Models\\Team', '--generate-relationships' => true ]);
+        $this->call('shield:setup');
+        $this->call('shield:install', [ 'panel' => $panel->getId() ]);
+        // $this->call('shield:setup', [ '--tenant', 'App\\Models\\Team' ]);
+        // $this->call('shield:install', [ 'panel' => $panel->getId(), '--tenant', 'App\\Models\\Team', '--generate-relationships' => true ]);
 
         $stringer = Stringer::for($panelPath);
         $stringer

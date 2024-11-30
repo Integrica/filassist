@@ -34,7 +34,7 @@ trait SaadeFilamentLaravelLog
             )
             ->save();
         
-        $locales = $package->locales ?? [ 'en' ];
+        $locales = $package->locales ?? $template->locales ?? [ 'en' ];
         foreach ($locales as $locale) {
             if (!File::exists("./lang/vendor/log/{$locale}/filament-laravel-log.php") 
                 && File::exists("./vendor/saade/filament-laravel-log/resources/lang/{$locale}/filament-laravel-log.php")) {

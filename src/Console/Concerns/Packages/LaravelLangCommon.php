@@ -10,7 +10,7 @@ trait LaravelLangCommon
 {
     public function configureLaravelLangCommon($template, $package, Panel $panel, string $panelPath): void
     {
-        $locales = $package->locales ?? [ ];
+        $locales = $package->locales ?? $template->locales ?? [ ];
         
         if (!blank($locales)) {
             $this->call('lang:add', [ 'locales' => implode(' ', $locales) ]);
