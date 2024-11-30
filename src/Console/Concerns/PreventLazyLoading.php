@@ -8,7 +8,7 @@ use Integrica\Scriptorium\Stringer;
 trait PreventLazyLoading
 {
     public function preventLazyLoading(object $template): void
-    {        
+    {
         EnvUpdater::for(base_path('.env'))
             ->setChanges([
                 'INTEGRICA_PREVENT_LAZY_LOADING' => ($template->prevent_lazy_loading ?? true) ? 'true' : 'false',

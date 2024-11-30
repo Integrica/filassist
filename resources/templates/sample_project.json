@@ -19,43 +19,48 @@
     "session_driver": "file",
     "cache_store": "file",
 
-    "filament-user" : {
-        "name" : "John Doe",
-        "email" : "john@doe.com",
-        "password" : null
+    "filament": {
+        "panel_name": "admin",
+        "user" : {
+            "name" : "John Doe",
+            "email" : "john@doe.com",
+            "password" : null
+        },
+        "notifications" : false,
+        "actions" : false
     },
 
-    "require": [
+    "packages": [
         {
             "package": "barryvdh/laravel-debugbar",
             "dev": true,
-            "disable-views": true
+            "disable-views": false
         },
         {
             "package": "laravel-lang/common",
             "dev": true,
-            "translations": [ 
-                "en",
+            "locales": [
                 "de"
             ]
         },
         {
             "package": "hugomyb/filament-error-mailer",
-            "email" : [
+            "emails" : [
                 "john@doe.com",
                 "jane@doe.com"
             ]
         },
         {
             "package": "saade/filament-laravel-log",
-            "translations": [ 
+            "navigation_group": true,
+            "locales": [ 
                 "en",
                 "de"
             ]
         },
         {
             "package": "bezhansalleh/filament-shield",
-            "translations": [ 
+            "locales": [ 
                 "en",
                 "de"
             ]

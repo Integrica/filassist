@@ -5,6 +5,7 @@ namespace Integrica\Filassist\Console;
 use Illuminate\Console\Command;
 use Illuminate\Support\Composer;
 use Illuminate\Support\Facades\File;
+use Integrica\Filassist\Console\Concerns\InstallAndConfigurePackages;
 use Integrica\Filassist\Console\Concerns\PreventLazyLoading;
 use Integrica\Filassist\Console\Concerns\SetSqlQueryLogging;
 use Integrica\Filassist\Console\Concerns\UpdateEnvFile;
@@ -14,6 +15,7 @@ class AutoConfigCommand extends Command
     use UpdateEnvFile;
     use SetSqlQueryLogging;
     use PreventLazyLoading;
+    use InstallAndConfigurePackages;
 
     /**
      * The name and signature of the console command.
@@ -65,6 +67,10 @@ class AutoConfigCommand extends Command
         $this->setSqlQueryLogging($template);
 
         $this->preventLazyLoading($template);
+
+        $this->call('migrate');
+
+        $this->installAndConfigurePackages($template);
 
         return Command::SUCCESS;
     }
