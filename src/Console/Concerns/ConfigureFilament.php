@@ -106,6 +106,11 @@ EOL;
                     ->append("->middleware([", "->plugins([\n", true)
                     ->append("->plugins([\n", "])")
             )
+            ->when(
+                value: !$stringer->contains("->passwordReset()") && ($template->password_reset ?? true),
+                callback: fn (Stringer $stringer) => $stringer
+                    ->append("->login()", "->passwordReset()", false)
+            )
             ->save();
     }
 }

@@ -27,7 +27,8 @@
             "password" : null
         },
         "notifications" : false,
-        "actions" : false
+        "actions" : false,
+        "password_forgotten" : false
     },
 
     "locales": [ 

@@ -53,6 +53,7 @@ trait BezhansallehFilamentShield
             ->replace("'discover_all_resources' => false,", "'discover_all_resources' => true,")
             ->replace("'discover_all_widgets' => false,", "'discover_all_widgets' => true,")
             ->replace("'discover_all_pages' => false,", "'discover_all_pages' => true,")
+            ->pregReplace("/('panel_user'\s*=>\s*\[\s*'enabled'\s*=>\s*)true/", "$1false")
             ->save();
 
         $this->call('shield:setup');
