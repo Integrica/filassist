@@ -100,6 +100,11 @@ EOL;
     {
         $stringer = Stringer::for($panelPath);
         $stringer
+            ->when(
+                value: !$stringer->contains("->discoverClusters"),
+                callback: fn (Stringer $stringer) => $stringer
+                    ->append("->discoverResources", "->discoverClusters(in: app_path('Filament/Clusters'), for: 'App\\Filament\\Clusters')", true)
+            )
             ->when( /** @phpstan-ignore-next-line */
                 value: !$stringer->contains("->plugins([\n"),
                 callback: fn (Stringer $stringer) => $stringer

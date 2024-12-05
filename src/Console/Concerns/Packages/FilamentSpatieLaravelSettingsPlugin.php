@@ -62,6 +62,7 @@ trait FilamentSpatieLaravelSettingsPlugin
         foreach ($locales as $locale) {
             if (!File::exists("./lang/{$locale}/settings.php") 
                 && File::exists("./vendor/integrica/filassist/resources/lang/{$locale}/settings.php")) {
+                File::ensureDirectoryExists("./lang/{$locale}");
                 File::copy("./vendor/integrica/filassist/resources/lang/{$locale}/settings.php", "./lang/{$locale}/settings.php");
             }
         }
