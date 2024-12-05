@@ -60,9 +60,15 @@ class AutoConfigCommand extends Command
         $this->options = $this->options();
 
         $template = json_decode(File::get($this->option('template')), false);
+        $useTemplateSettings = $template->db?->database != env('DB_DATABASE');
         // dump($template);
 
         $this->updateEnvFile($template);
+
+        if ($useTemplateSettings) {
+            $this->info("Updated .env file. Run command again for the rest of configuration!");
+            return Command::SUCCESS;
+        }
 
         $this->setSqlQueryLogging($template);
 

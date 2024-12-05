@@ -24,8 +24,7 @@
     "require": {
         "php": "^8.2",
         "filament/filament": "^3.2",
-        "spatie/laravel-package-tools": "^1.16",
-        "integrica/scriptorium": "^0.0.3"
+        "spatie/laravel-package-tools": "^1.16"
     },
     "autoload": {
         "psr-4": {
@@ -43,11 +42,5 @@
         "sort-packages": true
     },
     "minimum-stability": "dev",
-    "prefer-stable": true,
-    "repositories": [
-        {
-            "type": "vcs",
-            "url": "git@github.com:integrica/scriptorium.git"
-        }
-    ]
+    "prefer-stable": true
 }
