@@ -70,6 +70,9 @@
         },
         {
             "package": "noxoua/filament-activity-log"
+        },
+        {
+            "package": "bezhansalleh/filament-language-switch"
         }
     ]
 }

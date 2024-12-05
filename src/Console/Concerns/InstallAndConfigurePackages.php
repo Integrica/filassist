@@ -7,6 +7,7 @@ use Filament\Panel;
 use Illuminate\Support\Facades\File;
 use Illuminate\Support\Str;
 use Integrica\Filassist\Console\Concerns\Packages\BarryvdhLaravelDebugbar;
+use Integrica\Filassist\Console\Concerns\Packages\BezhansallehFilamentLanguageSwitch;
 use Integrica\Filassist\Console\Concerns\Packages\BezhansallehFilamentShield;
 use Integrica\Filassist\Console\Concerns\Packages\FilamentSpatieLaravelSettingsPlugin;
 use Integrica\Filassist\Console\Concerns\Packages\HugomybFilamentErrorMailer;
@@ -24,6 +25,7 @@ trait InstallAndConfigurePackages
     use BezhansallehFilamentShield;
     use FilamentSpatieLaravelSettingsPlugin;
     use NoxouaFilamentActivityLog;
+    use BezhansallehFilamentLanguageSwitch;
 
     public function installAndConfigurePackages(object $template): void
     {
